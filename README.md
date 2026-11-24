@@ -1,6 +1,8 @@
 # ChainGuard MCP — 14-Tool Web3 Security, DeFi Yield, Vault Recovery & USDT Payment MCP Server
 
 [![CI](https://github.com/EzeLich/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzeLich/chainguard-mcp/actions/workflows/ci.yml)
+[![ChainGuard MCP server](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp)
+[![ChainGuard MCP connector](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![MCP: 2025-03-26](https://img.shields.io/badge/MCP-Streamable%20HTTP%20%2B%20Stdio-38bdf8.svg)](https://chainguard-studio-production.up.railway.app/mcp)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://python.org)
