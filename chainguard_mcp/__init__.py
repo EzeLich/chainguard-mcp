@@ -1,6 +1,6 @@
 """
-ChainGuard MCP — 14-Tool Web3 Security, DeFi Yield, Vault Recovery & Non-Custodial USDT Bridge.
-Provides offline deterministic EVM calldata / MCP poisoning firewalls plus a zero-dependency
+ChainGuard MCP — 15-Tool Web3 Security, DeFi Yield, ERC-20 Allowance Revoker, Vault Recovery & Non-Custodial USDT Bridge.
+Provides offline deterministic EVM calldata / MCP poisoning / ERC-20 revocation firewalls plus a zero-dependency
 Stdio-to-Streamable-HTTP bridge to https://chainguard-studio-production.up.railway.app/mcp.
 """
 from __future__ import annotations
@@ -32,6 +32,7 @@ REMOTE_TOOL_NAMES: tuple[str, ...] = (
     "reclaim_solana_rent",
     "check_frontend_hijack",
     "scan_evm_dust_and_hygiene",
+    "build_erc20_approval_revoke",
     "build_evm_dust_to_usdt_sweep",
     "build_cross_chain_consolidation",
     "find_best_defi_yields",
@@ -39,6 +40,27 @@ REMOTE_TOOL_NAMES: tuple[str, ...] = (
     "create_usdt_invoice",
     "verify_usdt_invoice",
 )
+
+
+def build_erc20_revoke_calldata(token_address: str, spender: str, network: str = "base") -> dict[str, Any]:
+    """Deterministic offline builder for ERC-20 `approve(spender, 0)` allowance revocation calldata."""
+    tok = (token_address or "").strip()
+    sp = (spender or "").strip()
+    if not re.match(r"^0x[a-fA-F0-9]{40}$", tok):
+        raise ValueError(f"Invalid ERC-20 token_address: {tok}")
+    if not re.match(r"^0x[a-fA-F0-9]{40}$", sp):
+        raise ValueError(f"Invalid spender address: {sp}")
+    padded_spender = sp[2:].lower().rjust(64, "0")
+    zero_amount = "0" * 64
+    calldata = f"0x095ea7b3{padded_spender}{zero_amount}"
+    return {
+        "network": (network or "base").strip().lower(),
+        "to": tok,
+        "spender": sp,
+        "data": calldata,
+        "value": "0x0",
+        "action": "approve(spender, 0)",
+    }
 
 
 def inspect_tx_calldata(calldata: str, to_address: str = "") -> dict[str, Any]:
@@ -127,7 +149,7 @@ class ChainGuardRemoteClient:
     def post_jsonrpc(self, payload: dict[str, Any]) -> tuple[int, dict[str, Any] | None]:
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "chainguard-mcp/1.0.0",
+            "User-Agent": "chainguard-mcp/1.1.0",
         }
         if self.api_key:
             headers["X-API-Key"] = self.api_key
@@ -164,20 +186,119 @@ def _offline_tools_schema() -> list[dict[str, Any]]:
     return [
         {
             "name": "check_tx_firewall",
-            "description": "Offline EVM transaction drainer & unlimited ERC-20 approval inspector.",
+            "description": (
+                "Perform a read-only offline pre-flight security check on an unsigned EVM transaction (`to`, `data`) before signing. "
+                "Screens 4-byte selectors for unlimited `approve(MAX_UINT256)` (`0x095ea7b3`), NFT `setApprovalForAll(true)` (`0xa22cb465`), Permit2 drainer calls (`0xd505accf`), and UUPS proxy upgrades (`0x3659cfe6`). "
+                "Returns JSON with `verdict` (`ALLOW`, `WARN`, `BLOCK`), `risk_score` (0-100), and `alerts`."
+            ),
+            "annotations": {
+                "title": "Offline Pre-Flight EVM Transaction Firewall",
+                "readOnlyHint": True,
+                "destructiveHint": False,
+                "idempotentHint": True,
+                "openWorldHint": False,
+            },
             "inputSchema": {
                 "type": "object",
-                "properties": {"to": {"type": "string"}, "data": {"type": "string"}},
+                "properties": {
+                    "to": {
+                        "type": "string",
+                        "description": "42-character hexadecimal target contract address (`0x...`).",
+                    },
+                    "data": {
+                        "type": "string",
+                        "description": "Hex-encoded transaction calldata starting with `0x` (e.g. `0x095ea7b3...`).",
+                    },
+                },
                 "required": ["data"],
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "verdict": {"type": "string"},
+                    "risk_score": {"type": "integer"},
+                    "alerts": {"type": "array"},
+                },
+                "required": ["verdict", "risk_score"],
             },
         },
         {
             "name": "check_mcp_poisoning",
-            "description": "Offline hidden zero-width Unicode smuggling & prompt injection detector.",
+            "description": (
+                "Scan untrusted text, MCP tool descriptions, or prompts offline for invisible zero-width/bidirectional Unicode smuggling (`U+200B`..`U+202E`), prompt injection directives, and exposed 64-byte Solana keypairs or API keys. "
+                "Read-only deterministic text scanner with zero network calls. "
+                "Returns JSON with `verdict` (`ALLOW`, `WARN`, `BLOCK`), `risk_score` (0-100), and `alerts`."
+            ),
+            "annotations": {
+                "title": "Offline MCP Poisoning & Unicode Smuggling Scanner",
+                "readOnlyHint": True,
+                "destructiveHint": False,
+                "idempotentHint": True,
+                "openWorldHint": False,
+            },
             "inputSchema": {
                 "type": "object",
-                "properties": {"text": {"type": "string"}},
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "Raw untrusted text, MCP tool description, or prompt string to scan.",
+                    },
+                },
                 "required": ["text"],
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "verdict": {"type": "string"},
+                    "risk_score": {"type": "integer"},
+                    "alerts": {"type": "array"},
+                },
+                "required": ["verdict", "risk_score"],
+            },
+        },
+        {
+            "name": "build_erc20_approval_revoke",
+            "description": (
+                "Construct unsigned non-custodial EVM calldata (`approve(spender, 0)`, selector `0x095ea7b3`) offline to revoke an open ERC-20 token allowance on any EVM network. "
+                "Read-only calldata generator: never signs or broadcasts transactions. "
+                "Returns JSON with `network`, `to`, `spender`, `data` (68-byte hex calldata), and `value` (`0x0`)."
+            ),
+            "annotations": {
+                "title": "Build ERC-20 Allowance Revocation Calldata",
+                "readOnlyHint": True,
+                "destructiveHint": False,
+                "idempotentHint": True,
+                "openWorldHint": False,
+            },
+            "inputSchema": {
+                "type": "object",
+                "properties": {
+                    "token_address": {
+                        "type": "string",
+                        "description": "42-character hexadecimal ERC-20 token contract address (`0x...`) whose allowance will be reset to zero.",
+                    },
+                    "spender": {
+                        "type": "string",
+                        "description": "42-character hexadecimal router or spender contract address (`0x...`) whose spending permission is being revoked.",
+                    },
+                    "network": {
+                        "type": "string",
+                        "default": "base",
+                        "description": "Target EVM chain identifier (e.g. `base`, `arbitrum`, `polygon`, `ethereum`). Defaults to `base`.",
+                    },
+                },
+                "required": ["token_address", "spender"],
+            },
+            "outputSchema": {
+                "type": "object",
+                "properties": {
+                    "network": {"type": "string"},
+                    "to": {"type": "string"},
+                    "spender": {"type": "string"},
+                    "data": {"type": "string"},
+                    "value": {"type": "string"},
+                },
+                "required": ["network", "to", "data"],
             },
         },
     ]
@@ -217,25 +338,32 @@ def handle_mcp_message(
                 name = str(params.get("name") or "")
                 args = params.get("arguments") or {}
                 if name == "check_tx_firewall":
-                    out = inspect_tx_calldata(str(args.get("data") or ""), str(args.get("to") or ""))
+                    out = inspect_tx_calldata(str(args.get("data") or args.get("calldata") or ""), str(args.get("to") or ""))
                     return {"jsonrpc": "2.0", "id": rpc_id, "result": {"content": [{"type": "text", "text": json.dumps(out, indent=2)}]}}
                 if name == "check_mcp_poisoning":
                     out = inspect_mcp_text(str(args.get("text") or ""))
+                    return {"jsonrpc": "2.0", "id": rpc_id, "result": {"content": [{"type": "text", "text": json.dumps(out, indent=2)}]}}
+                if name == "build_erc20_approval_revoke":
+                    out = build_erc20_revoke_calldata(
+                        str(args.get("token_address") or ""),
+                        str(args.get("spender") or ""),
+                        str(args.get("network") or "base"),
+                    )
                     return {"jsonrpc": "2.0", "id": rpc_id, "result": {"content": [{"type": "text", "text": json.dumps(out, indent=2)}]}}
             return {"jsonrpc": "2.0", "id": rpc_id, "error": {"code": -32001, "message": f"Remote MCP unreachable: {exc}"}}
 
     # Pure deterministic offline mode
     if method == "initialize":
-        req_proto = str(params.get("protocolVersion") or "2025-03-26")
+        req_proto = str(params.get("protocolVersion") or "2025-06-18")
         supported = {"2025-06-18", "2025-03-26", "2024-11-05"}
         return {
             "jsonrpc": "2.0",
             "id": rpc_id,
             "result": {
-                "protocolVersion": req_proto if req_proto in supported else "2025-03-26",
+                "protocolVersion": req_proto if req_proto in supported else "2025-06-18",
                 "capabilities": {"tools": {"listChanged": False}, "resources": {"subscribe": False, "listChanged": False}, "prompts": {"listChanged": False}},
-                "serverInfo": {"name": "chainguard-mcp", "version": "1.0.0"},
-                "instructions": f"Offline local security firewall mode active. Full 14-tool remote MCP: {mcp_url} | $9 Monthly Pass: {INSTANT_PASS_URL}",
+                "serverInfo": {"name": "chainguard-mcp", "version": "1.1.0"},
+                "instructions": f"Offline local security firewall mode active. Full 15-tool remote MCP: {mcp_url} | $9 Monthly Pass: {INSTANT_PASS_URL}",
             },
         }
     if method == "tools/list":
@@ -269,10 +397,17 @@ def handle_mcp_message(
         name = str(params.get("name") or "")
         args = params.get("arguments") or {}
         if name == "check_tx_firewall":
-            out = inspect_tx_calldata(str(args.get("data") or ""), str(args.get("to") or ""))
+            out = inspect_tx_calldata(str(args.get("data") or args.get("calldata") or ""), str(args.get("to") or ""))
             return {"jsonrpc": "2.0", "id": rpc_id, "result": {"content": [{"type": "text", "text": json.dumps(out, indent=2)}]}}
         if name == "check_mcp_poisoning":
             out = inspect_mcp_text(str(args.get("text") or ""))
+            return {"jsonrpc": "2.0", "id": rpc_id, "result": {"content": [{"type": "text", "text": json.dumps(out, indent=2)}]}}
+        if name == "build_erc20_approval_revoke":
+            out = build_erc20_revoke_calldata(
+                str(args.get("token_address") or ""),
+                str(args.get("spender") or ""),
+                str(args.get("network") or "base"),
+            )
             return {"jsonrpc": "2.0", "id": rpc_id, "result": {"content": [{"type": "text", "text": json.dumps(out, indent=2)}]}}
         return {"jsonrpc": "2.0", "id": rpc_id, "error": {"code": -32601, "message": f"Tool {name} requires remote mode (omit --offline)"}}
 
@@ -284,6 +419,7 @@ __all__ = [
     "DEFAULT_MCP_URL",
     "INSTANT_PASS_URL",
     "REMOTE_TOOL_NAMES",
+    "build_erc20_revoke_calldata",
     "handle_mcp_message",
     "inspect_mcp_text",
     "inspect_tx_calldata",

@@ -1,13 +1,14 @@
-# ChainGuard MCP — 14-Tool Web3 Security, DeFi Yield, Vault Recovery & USDT Payment MCP Server
+# ChainGuard MCP — 15-Tool Web3 Security, DeFi Yield, Allowance Revoker, Vault Recovery & USDT Payment MCP Server
 
 [![CI](https://github.com/EzeLich/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzeLich/chainguard-mcp/actions/workflows/ci.yml)
+[![Official MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.EzeLich%2Fchainguard--mcp-2563eb.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=EzeLich)
 [![ChainGuard MCP server](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp)
 [![ChainGuard MCP connector](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![MCP: 2025-03-26](https://img.shields.io/badge/MCP-Streamable%20HTTP%20%2B%20Stdio-38bdf8.svg)](https://chainguard-studio-production.up.railway.app/mcp)
+[![MCP: 2025-06-18](https://img.shields.io/badge/MCP-Streamable%20HTTP%20%2B%20Stdio-38bdf8.svg)](https://chainguard-studio-production.up.railway.app/mcp)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://python.org)
 
-**Equip Claude Desktop, Cursor, Windsurf, OpenCode & Autonomous AI Agents with 14 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, DeFiLlama Yield Scanners, Vault Recovery Calldata Builders, and Non-Custodial USDT/USDC Checkout Tools.**
+**Equip Claude Desktop, Cursor, Windsurf, OpenCode & Autonomous AI Agents with 15 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, ERC-20 Allowance Revokers, DeFiLlama Yield Scanners, Vault Recovery Calldata Builders, and Non-Custodial USDT/USDC Checkout Tools.**
 
 - 🧠 **Live Hosted MCP Endpoint (Zero Install):** `https://chainguard-studio-production.up.railway.app/mcp`
 - ⚡ **Instant 1-Click $9 Unlimited Monthly Pass (USDC/USDT Base — Auto-Mints `cg_live_` Key):** [Get Unlimited MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)

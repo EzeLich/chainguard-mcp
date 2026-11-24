@@ -54,9 +54,33 @@ def test_offline_mcp_stdio_handshake_and_tools():
     assert init["result"]["protocolVersion"] == "2025-03-26"
     assert handle_mcp_message({"jsonrpc": "2.0", "method": "notifications/initialized"}, offline=True) is None
     assert handle_mcp_message({"jsonrpc": "2.0", "id": 2, "method": "ping"}, offline=True) == {"jsonrpc": "2.0", "id": 2, "result": {}}
-    assert len(handle_mcp_message({"jsonrpc": "2.0", "id": 3, "method": "tools/list"}, offline=True)["result"]["tools"]) == 2
+    tools = handle_mcp_message({"jsonrpc": "2.0", "id": 3, "method": "tools/list"}, offline=True)["result"]["tools"]
+    assert len(tools) == 3
+    for t in tools:
+        assert "annotations" in t and "outputSchema" in t
+        for p_name, p_schema in t["inputSchema"].get("properties", {}).items():
+            assert p_schema.get("description"), f"Missing description on {t['name']}.{p_name}"
     assert len(handle_mcp_message({"jsonrpc": "2.0", "id": 4, "method": "resources/list"}, offline=True)["result"]["resources"]) == 1
     assert len(handle_mcp_message({"jsonrpc": "2.0", "id": 5, "method": "prompts/list"}, offline=True)["result"]["prompts"]) == 1
+
+    rev_res = handle_mcp_message(
+        {
+            "jsonrpc": "2.0",
+            "id": 7,
+            "method": "tools/call",
+            "params": {
+                "name": "build_erc20_approval_revoke",
+                "arguments": {
+                    "token_address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+                    "spender": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+                    "network": "base",
+                },
+            },
+        },
+        offline=True,
+    )
+    rev_parsed = json.loads(rev_res["result"]["content"][0]["text"])
+    assert rev_parsed["data"].startswith("0x095ea7b3")
 
     call_res = handle_mcp_message(
         {
