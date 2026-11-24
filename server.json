@@ -1,28 +1,18 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.EzeLich/chainguard-mcp",
-  "title": "ChainGuard MCP — Web3 Security, DeFi Yield, Vault Recovery & Non-Custodial USDT",
-  "description": "14-tool Web3 security firewall (EIP-7702, Solana Token-2022, tx calldata, MCP poisoning), Vault Recovery, DeFiLlama yield alpha, and non-custodial PayGate USDT/USDC checkout.",
-  "version": "1.0.0",
+  "title": "ChainGuard Web3 Security & DeFi MCP",
+  "description": "14-tool Web3 security firewall, EIP-7702 & Solana Token-2022 auditor, DeFi yield & USDT checkout.",
+  "version": "1.0.1",
+  "websiteUrl": "https://chainguard-studio-production.up.railway.app",
   "repository": {
     "url": "https://github.com/EzeLich/chainguard-mcp",
     "source": "github"
   },
-  "websiteUrl": "https://chainguard-studio-production.up.railway.app",
   "remotes": [
     {
       "type": "streamable-http",
       "url": "https://chainguard-studio-production.up.railway.app/mcp"
-    }
-  ],
-  "packages": [
-    {
-      "registryType": "pypi",
-      "identifier": "chainguard-mcp",
-      "version": "1.0.0",
-      "transport": {
-        "type": "stdio"
-      }
     }
   ]
 }
