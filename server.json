@@ -3,7 +3,7 @@
   "name": "io.github.EzeLich/chainguard-mcp",
   "title": "ChainGuard Web3 Security & DeFi MCP",
   "description": "14-tool Web3 security firewall, EIP-7702 & Solana Token-2022 auditor, DeFi yield & USDT checkout.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "websiteUrl": "https://chainguard-studio-production.up.railway.app",
   "repository": {
     "url": "https://github.com/EzeLich/chainguard-mcp",
