@@ -11,7 +11,10 @@
 **Equip Claude Desktop, Cursor, Windsurf, OpenCode & Autonomous AI Agents with 15 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, ERC-20 Allowance Revokers, DeFiLlama Yield Scanners, Vault Recovery Calldata Builders, and Non-Custodial USDT/USDC Checkout Tools.**
 
 - 🧠 **Live Hosted MCP Endpoint (Zero Install):** `https://chainguard-studio-production.up.railway.app/mcp`
-- ⚡ **Instant 1-Click $9 Unlimited Monthly Pass (USDC/USDT Base — Auto-Mints `cg_live_` Key):** [Get Unlimited MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)
+- ⚡ **Instant $0.50 24h Micro-Pass (50 Calls) · $2 7-Day Starter Pass (250 Calls) · $9 30-Day Unlimited Pass:**
+  - [⚡ $0.50 · 24h Micro-Unlock Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1)
+  - [🚀 $2.00 · 7-Day Starter MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7)
+  - [💎 $9.00 · 30-Day Unlimited MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)
 - 🌐 **Full Platform & Wallet Recovery:** [https://chainguard-studio-production.up.railway.app](https://chainguard-studio-production.up.railway.app)
 - 💳 **Powered by:** [EzeLich/paygate-usdt](https://github.com/EzeLich/paygate-usdt) (`0%` non-custodial USDT/USDC settlement)
 
@@ -56,7 +59,7 @@ chainguard-mcp mcp --offline
 
 ---
 
-## All 14 Live MCP Tools
+## All 15 Live MCP Tools (Grade-A TDQS `4.2 / 5.0` on Glama)
 
 | Tool | Category | What It Does |
 |---|---|---|
@@ -66,7 +69,8 @@ chainguard-mcp mcp --offline
 | `check_mcp_poisoning` | Agent Safety | Detect hidden zero-width Unicode smuggling, prompt injections, and raw 64-byte keypair leaks |
 | `audit_solidity_or_mcp` | Code & Config Audit | Instant vulnerability triage for Solidity contracts or MCP/AI agent configs |
 | `check_frontend_hijack` | Frontend Security | Inspect DeFi frontend URLs & EIP-1967 proxies for missing CSP/SRI or script hijacks |
-| `scan_evm_dust_and_hygiene` | Vault Recovery | Zero-connect multi-chain EVM scan across Base, Arbitrum, Optimism, Polygon & Ethereum |
+| `scan_evm_dust_and_hygiene` | Vault Recovery | Zero-connect 8-chain EVM scan across Base, Arbitrum, Optimism, Polygon, Ethereum, BSC, Linea & Avalanche |
+| `build_erc20_approval_revoke` | Allowance Hygiene | Construct unsigned `approve(spender, 0)` calldata offline or online to revoke open ERC-20 router allowances |
 | `reclaim_solana_rent` | Vault Recovery | Scan Solana wallets for trapped SOL rent in empty 0-balance SPL/Token-2022 accounts & build unsigned Close tx |
 | `build_evm_dust_to_usdt_sweep` | Non-Custodial DeFi | Build exact-amount `approve` + audited KyberSwap/OpenOcean calldata to sweep dust into USDT/USDC |
 | `build_cross_chain_consolidation` | Cross-Chain DeFi | Build 1-click LI.FI Diamond consolidation calldata bridging tokens across EVM L2s |
@@ -91,9 +95,12 @@ chainguard-mcp tools
 
 ## Upgrade Limits & Managed Plans (100% Non-Custodial USDC/USDT)
 
-- **Free Tier (`$0`)**: **5 MCP tool calls/hour** per IP + unlimited offline CLI scans (`scan-tx`, `scan-mcp`, `--offline`).
-- **Unlimited Monthly MCP & Pro API Pass (`$9 USDC/USDT`, 30 days)**: Auto-mints your `cg_live_...` key immediately upon on-chain confirmation -> [⚡ Activate 1-Click Base USDC/USDT Pass](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30).
-- **Custom Enterprise Security / White-Label MCP Deployment (`$199–$499 USDT`)**: [Launch PayGate Checkout](https://chainguard-studio-production.up.railway.app/paygate#b2b).
+- **Free Diagnostic Tier (`$0`)**: **5 MCP diagnostic calls/hour** per IP + unlimited offline CLI scans (`scan-tx`, `scan-mcp`, `--offline`).
+- **24-Hour Impulse Micro-Unlock Pass (`$0.50 USDC/USDT`, 50 calls)**: Unlocks full vulnerability remediation patches, 25 DeFi pools & 8-chain portfolios -> [⚡ Pay $0.50 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1).
+- **7-Day Starter MCP & Pro API Pass (`$2.00 USDC/USDT`, 250 calls)**: -> [🚀 Pay $2.00 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7).
+- **30-Day Unlimited MCP & Pro API Pass (`$9.00 USDC/USDT`, 1,000 REST calls + unlimited `/mcp`)**: Auto-mints your `cg_live_...` key immediately upon 1 block confirmation -> [💎 Pay $9.00 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30).
+- **In-IDE Direct On-Chain Unlock**: Send `>= $0.50` USDT/USDC on Base, Polygon, Arbitrum, BSC, Ethereum, or Solana to `0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD` (Solana: `3fZSMAyCEMhZwWiynbJDjoYNUT97aiV9BLzoUNroEMAz`) and pass header `X-Payment-Tx: <tx_hash>` on `POST /mcp` to auto-mint your `cg_live_` key inside the MCP response.
+- **Custom Enterprise Security / White-Label MCP Deployment (`$79–$499 USDT`)**: [Launch PayGate Checkout](https://chainguard-studio-production.up.railway.app/paygate#b2b).
 
 ## Local Testing
 
