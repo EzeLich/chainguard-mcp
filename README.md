@@ -10,13 +10,13 @@
 
 **Equip Claude Desktop, Cursor, Windsurf, OpenCode & Autonomous AI Agents with 15 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, ERC-20 Allowance Revokers, DeFiLlama Yield Scanners, Vault Recovery Calldata Builders, and Non-Custodial USDT/USDC Checkout Tools.**
 
-- 🧠 **Live Hosted MCP Endpoint (Zero Install):** `https://chainguard-studio-production.up.railway.app/mcp`
-- ⚡ **Instant $0.50 24h Micro-Pass (50 Calls) · $2 7-Day Starter Pass (250 Calls) · $9 30-Day Unlimited Pass:**
-  - [⚡ $0.50 · 24h Micro-Unlock Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1)
-  - [🚀 $2.00 · 7-Day Starter MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7)
-  - [💎 $9.00 · 30-Day Unlimited MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)
-- 🌐 **Full Platform & Wallet Recovery:** [https://chainguard-studio-production.up.railway.app](https://chainguard-studio-production.up.railway.app)
-- 💳 **Powered by:** [EzeLich/paygate-usdt](https://github.com/EzeLich/paygate-usdt) (`0%` non-custodial USDT/USDC settlement)
+- **Live Hosted MCP Endpoint (Zero Install):** `https://chainguard-studio-production.up.railway.app/mcp`
+- **Instant $0.50 24h Micro-Pass (50 Calls) · $2 7-Day Starter Pass (250 Calls) · $9 30-Day Unlimited Pass:**
+  - [$0.50 · 24h Micro-Unlock Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1)
+  - [$2.00 · 7-Day Starter MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7)
+  - [$9.00 · 30-Day Unlimited MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)
+- **Full Platform & Wallet Recovery:** [https://chainguard-studio-production.up.railway.app](https://chainguard-studio-production.up.railway.app)
+- **Powered by:** [EzeLich/paygate-usdt](https://github.com/EzeLich/paygate-usdt) (`0%` non-custodial USDT/USDC settlement)
 
 ---
 
@@ -96,9 +96,9 @@ chainguard-mcp tools
 ## Upgrade Limits & Managed Plans (100% Non-Custodial USDC/USDT)
 
 - **Free Diagnostic Tier (`$0`)**: **5 MCP diagnostic calls/hour** per IP + unlimited offline CLI scans (`scan-tx`, `scan-mcp`, `--offline`).
-- **24-Hour Impulse Micro-Unlock Pass (`$0.50 USDC/USDT`, 50 calls)**: Unlocks full vulnerability remediation patches, 25 DeFi pools & 8-chain portfolios -> [⚡ Pay $0.50 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1).
-- **7-Day Starter MCP & Pro API Pass (`$2.00 USDC/USDT`, 250 calls)**: -> [🚀 Pay $2.00 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7).
-- **30-Day Unlimited MCP & Pro API Pass (`$9.00 USDC/USDT`, 1,000 REST calls + unlimited `/mcp`)**: Auto-mints your `cg_live_...` key immediately upon 1 block confirmation -> [💎 Pay $9.00 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30).
+- **24-Hour Impulse Micro-Unlock Pass (`$0.50 USDC/USDT`, 50 calls)**: Unlocks full vulnerability remediation patches, 25 DeFi pools & 8-chain portfolios -> [Pay $0.50 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1).
+- **7-Day Starter MCP & Pro API Pass (`$2.00 USDC/USDT`, 250 calls)**: -> [Pay $2.00 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7).
+- **30-Day Unlimited MCP & Pro API Pass (`$9.00 USDC/USDT`, 1,000 REST calls + unlimited `/mcp`)**: Auto-mints your `cg_live_...` key immediately upon 1 block confirmation -> [Pay $9.00 (Base/Polygon/Arbitrum/BSC/Solana)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30).
 - **In-IDE Direct On-Chain Unlock**: Send `>= $0.50` USDT/USDC on Base, Polygon, Arbitrum, BSC, Ethereum, or Solana to `0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD` (Solana: `3fZSMAyCEMhZwWiynbJDjoYNUT97aiV9BLzoUNroEMAz`) and pass header `X-Payment-Tx: <tx_hash>` on `POST /mcp` to auto-mint your `cg_live_` key inside the MCP response.
 - **Custom Enterprise Security / White-Label MCP Deployment (`$79–$499 USDT`)**: [Launch PayGate Checkout](https://chainguard-studio-production.up.railway.app/paygate#b2b).
 
