@@ -304,7 +304,7 @@ class ChainGuardRemoteClient:
     def post_jsonrpc(self, payload: dict[str, Any]) -> tuple[int, dict[str, Any] | None]:
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "chainguard-mcp/1.3.0",
+            "User-Agent": "chainguard-mcp/1.3.1",
         }
         if self.api_key:
             headers["X-API-Key"] = self.api_key
@@ -1175,7 +1175,7 @@ def handle_mcp_message(
                     "resources": {"subscribe": False, "listChanged": False},
                     "prompts": {"listChanged": False},
                 },
-                "serverInfo": {"name": "chainguard-mcp", "version": "1.3.0"},
+                "serverInfo": {"name": "chainguard-mcp", "version": "1.3.1"},
                 "instructions": (
                     f"ChainGuard Web3 Security, DeFi Yield, ERC-20 Revoker & USDT Gateway MCP (15 tools). "
                     f"Remote Streamable-HTTP MCP: {mcp_url} | $2 7-Day Starter Pass: {STARTER_PASS_URL} | $9 Monthly Pass: {INSTANT_PASS_URL}"

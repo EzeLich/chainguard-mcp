@@ -1,7 +1,7 @@
 # ChainGuard MCP v1.3 — 15-Tool Web3 Security, GitHub Action CI Gate, DeFi Yield, Allowance Revoker & USDT Payment MCP Server
 
 [![CI](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml)
-[![Official MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.EzeLich%2Fchainguard--mcp-2563eb.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=EzeLich)
+[![Official MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.EzequielLech%2Fchainguard--mcp-2563eb.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=EzequielLech)
 [![ChainGuard MCP server](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp)
 [![ChainGuard MCP connector](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: EzequielLech/chainguard-mcp@v1.3.0
+      - uses: EzequielLech/chainguard-mcp@v1.3.1
         with:
           path: "."
           fail-on-block: "true"
