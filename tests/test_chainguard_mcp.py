@@ -56,7 +56,9 @@ def test_offline_mcp_stdio_handshake_and_tools():
     assert handle_mcp_message({"jsonrpc": "2.0", "id": 2, "method": "ping"}, offline=True) == {"jsonrpc": "2.0", "id": 2, "result": {}}
     tools = handle_mcp_message({"jsonrpc": "2.0", "id": 3, "method": "tools/list"}, offline=True)["result"]["tools"]
     assert len(tools) == 3
-    for t in tools:
+    full_tools = handle_mcp_message({"jsonrpc": "2.0", "id": 30, "method": "tools/list"}, offline=False)["result"]["tools"]
+    assert len(full_tools) == 15
+    for t in tools + full_tools:
         assert "annotations" in t and "outputSchema" in t
         for p_name, p_schema in t["inputSchema"].get("properties", {}).items():
             assert p_schema.get("description"), f"Missing description on {t['name']}.{p_name}"
