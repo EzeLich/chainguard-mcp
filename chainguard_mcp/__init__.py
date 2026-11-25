@@ -143,6 +143,156 @@ def inspect_mcp_text(text: str) -> dict[str, Any]:
     }
 
 
+def inspect_solidity_text(text: str) -> dict[str, Any]:
+    """Deterministic offline static scanner for critical Solidity smart contract vulnerabilities."""
+    src = text or ""
+    alerts: list[dict[str, Any]] = []
+    risk_score = 0
+
+    if re.search(r"\btx\.origin\b", src):
+        risk_score += 70
+        alerts.append({"id": "SOL-TX-ORIGIN", "severity": "CRITICAL", "detail": "tx.origin authentication bypass vector detected; use msg.sender."})
+
+    if re.search(r"\bselfdestruct\s*\(", src):
+        risk_score += 80
+        alerts.append({"id": "SOL-SELFDESTRUCT", "severity": "CRITICAL", "detail": "selfdestruct() call detected (deprecated/high-risk contract destruction)."})
+
+    if re.search(r"\.delegatecall\s*\(", src):
+        risk_score += 55
+        alerts.append({"id": "SOL-DELEGATECALL", "severity": "HIGH", "detail": "Low-level delegatecall() shares caller storage; verify trusted target and layout."})
+
+    if re.search(r"\.call\s*\{[^}]*value\s*:", src) and "nonReentrant" not in src:
+        risk_score += 65
+        alerts.append({"id": "SOL-REENTRANCY", "severity": "CRITICAL", "detail": "External ETH .call{value:} transfer without nonReentrant guard detected."})
+
+    if re.search(r"\.call\s*[\(\{]", src) and not re.search(r"\(\s*bool\b", src) and "require(" not in src:
+        risk_score += 40
+        alerts.append({"id": "SOL-UNCHECKED-CALL", "severity": "HIGH", "detail": "Low-level .call() return boolean does not appear checked."})
+
+    risk_score = min(100, risk_score)
+    verdict = "BLOCK" if risk_score >= 50 else ("WARN" if risk_score >= 25 else "ALLOW")
+    return {
+        "mode": "offline_solidity_static",
+        "verdict": verdict,
+        "risk_score": risk_score,
+        "alerts": alerts,
+        "pass_url": INSTANT_PASS_URL,
+    }
+
+
+_SCAN_SKIP_DIRS = {
+    ".git",
+    "node_modules",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".pytest_cache",
+    "dist",
+    "build",
+    ".next",
+}
+_SCAN_EXTENSIONS = {".sol", ".json", ".yaml", ".yml", ".md"}
+_MAX_SCAN_BYTES = 512 * 1024
+
+
+def scan_directory(root_path: str) -> dict[str, Any]:
+    """Recursively scan .sol contracts and MCP/config files in a repository directory."""
+    root = os.path.abspath(root_path or ".")
+    files_scanned = 0
+    findings: list[dict[str, Any]] = []
+    max_risk = 0
+    severity_counts = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "INFO": 0}
+
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames[:] = sorted(d for d in dirnames if d not in _SCAN_SKIP_DIRS and not d.startswith(".git"))
+        for fname in sorted(filenames):
+            ext = os.path.splitext(fname)[1].lower()
+            if ext not in _SCAN_EXTENSIONS:
+                continue
+            fpath = os.path.join(dirpath, fname)
+            try:
+                if os.path.getsize(fpath) > _MAX_SCAN_BYTES:
+                    continue
+                with open(fpath, "r", encoding="utf-8", errors="replace") as fh:
+                    content = fh.read()
+            except OSError:
+                continue
+
+            files_scanned += 1
+            rel_path = os.path.relpath(fpath, root).replace("\\", "/")
+            checks = [inspect_mcp_text(content)]
+            if ext == ".sol":
+                checks.insert(0, inspect_solidity_text(content))
+
+            for chk in checks:
+                max_risk = max(max_risk, int(chk.get("risk_score") or 0))
+                for al in chk.get("alerts") or []:
+                    sev = str(al.get("severity") or "INFO").upper()
+                    severity_counts[sev] = severity_counts.get(sev, 0) + 1
+                    findings.append(
+                        {
+                            "file": rel_path,
+                            "id": al.get("id"),
+                            "severity": sev,
+                            "detail": al.get("detail"),
+                        }
+                    )
+
+    verdict = "BLOCK" if max_risk >= 50 else ("WARN" if max_risk >= 25 else "ALLOW")
+    return {
+        "mode": "offline_directory_scan",
+        "root": root.replace("\\", "/"),
+        "files_scanned": files_scanned,
+        "verdict": verdict,
+        "max_risk_score": max_risk,
+        "severity_counts": severity_counts,
+        "findings_count": len(findings),
+        "findings": findings,
+        "pass_url": INSTANT_PASS_URL,
+    }
+
+
+def format_scan_markdown(report: dict[str, Any]) -> str:
+    """Format a scan_directory report as a clean GitHub-Flavored Markdown table."""
+    verdict = str(report.get("verdict") or "ALLOW")
+    files_scanned = int(report.get("files_scanned") or 0)
+    max_risk = int(report.get("max_risk_score") or 0)
+    findings = list(report.get("findings") or [])
+    lines = [
+        "## ChainGuard Security Gate Report",
+        "",
+        f"- **Verdict:** `{verdict}` (max risk score `{max_risk}/100`)",
+        f"- **Files scanned:** `{files_scanned}`",
+        f"- **Findings:** `{len(findings)}`",
+        "",
+    ]
+    if findings:
+        lines.extend(
+            [
+                "| File | Rule | Severity | Detail |",
+                "|---|---|---|---|",
+            ]
+        )
+        for item in findings[:100]:
+            f_col = str(item.get("file") or "").replace("|", "\\|")
+            r_col = str(item.get("id") or "").replace("|", "\\|")
+            s_col = str(item.get("severity") or "").replace("|", "\\|")
+            d_col = str(item.get("detail") or "").replace("|", "\\|")
+            lines.append(f"| `{f_col}` | `{r_col}` | **{s_col}** | {d_col} |")
+        lines.append("")
+    else:
+        lines.append("No Solidity critical patterns, Unicode smuggling, prompt injections, or leaked keys detected.")
+        lines.append("")
+
+    lines.append(
+        f"Need full AI remediation patches, 8-chain allowance hygiene, or 24/7 watchdogs? "
+        f"[24h Micro Pass ($0.50)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1) | "
+        f"[7-Day Starter Pass ($2.00)]({STARTER_PASS_URL}) | "
+        f"[30-Day Unlimited Pass ($9.00)]({INSTANT_PASS_URL})"
+    )
+    return "\n".join(lines)
+
+
 class ChainGuardRemoteClient:
     """Thin JSON-RPC 2.0 client for the hosted ChainGuard Firewall & PayGate MCP server."""
 
@@ -154,7 +304,7 @@ class ChainGuardRemoteClient:
     def post_jsonrpc(self, payload: dict[str, Any]) -> tuple[int, dict[str, Any] | None]:
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "chainguard-mcp/1.2.0",
+            "User-Agent": "chainguard-mcp/1.3.0",
         }
         if self.api_key:
             headers["X-API-Key"] = self.api_key
@@ -1025,7 +1175,7 @@ def handle_mcp_message(
                     "resources": {"subscribe": False, "listChanged": False},
                     "prompts": {"listChanged": False},
                 },
-                "serverInfo": {"name": "chainguard-mcp", "version": "1.2.0"},
+                "serverInfo": {"name": "chainguard-mcp", "version": "1.3.0"},
                 "instructions": (
                     f"ChainGuard Web3 Security, DeFi Yield, ERC-20 Revoker & USDT Gateway MCP (15 tools). "
                     f"Remote Streamable-HTTP MCP: {mcp_url} | $2 7-Day Starter Pass: {STARTER_PASS_URL} | $9 Monthly Pass: {INSTANT_PASS_URL}"

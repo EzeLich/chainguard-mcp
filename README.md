@@ -1,6 +1,6 @@
-# ChainGuard MCP — 15-Tool Web3 Security, DeFi Yield, Allowance Revoker, Vault Recovery & USDT Payment MCP Server
+# ChainGuard MCP v1.3 — 15-Tool Web3 Security, GitHub Action CI Gate, DeFi Yield, Allowance Revoker & USDT Payment MCP Server
 
-[![CI](https://github.com/EzeLich/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzeLich/chainguard-mcp/actions/workflows/ci.yml)
+[![CI](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml)
 [![Official MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.EzeLich%2Fchainguard--mcp-2563eb.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=EzeLich)
 [![ChainGuard MCP server](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp)
 [![ChainGuard MCP connector](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp)
@@ -8,15 +8,35 @@
 [![MCP: 2025-06-18](https://img.shields.io/badge/MCP-Streamable%20HTTP%20%2B%20Stdio-38bdf8.svg)](https://chainguard-studio-production.up.railway.app/mcp)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://python.org)
 
-**Equip Claude Desktop, Cursor, Windsurf, OpenCode & Autonomous AI Agents with 15 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, ERC-20 Allowance Revokers, DeFiLlama Yield Scanners, Vault Recovery Calldata Builders, and Non-Custodial USDT/USDC Checkout Tools.**
+**Equip Claude Desktop, Cursor, Windsurf, OpenCode, Autonomous AI Agents, and GitHub Actions CI Pipelines with 15 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, ERC-20 Allowance Revokers, DeFiLlama Yield Scanners, Vault Recovery Calldata Builders, and Non-Custodial USDT/USDC Checkout Tools.**
 
 - **Live Hosted MCP Endpoint (Zero Install):** `https://chainguard-studio-production.up.railway.app/mcp`
 - **Instant $0.50 24h Micro-Pass (50 Calls) · $2 7-Day Starter Pass (250 Calls) · $9 30-Day Unlimited Pass:**
-  - [$0.50 · 24h Micro-Unlock Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1)
-  - [$2.00 · 7-Day Starter MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7)
-  - [$9.00 · 30-Day Unlimited MCP Pass →](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)
+  - [$0.50 · 24h Micro-Unlock Pass ->](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1)
+  - [$2.00 · 7-Day Starter MCP Pass ->](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7)
+  - [$9.00 · 30-Day Unlimited MCP Pass ->](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)
 - **Full Platform & Wallet Recovery:** [https://chainguard-studio-production.up.railway.app](https://chainguard-studio-production.up.railway.app)
-- **Powered by:** [EzeLich/paygate-usdt](https://github.com/EzeLich/paygate-usdt) (`0%` non-custodial USDT/USDC settlement)
+- **Powered by:** [EzequielLech/paygate-usdt](https://github.com/EzequielLech/paygate-usdt) (`0%` non-custodial USDT/USDC settlement)
+
+---
+
+## GitHub Action CI Security Gate (10-Line Workflow)
+
+Block `tx.origin` auth bypasses, `selfdestruct`, unchecked `delegatecall`, reentrancy, invisible zero-width Unicode tool poisoning, prompt injections, and leaked private keys on every pull request:
+
+```yaml
+name: ChainGuard Security Gate
+on: [push, pull_request]
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EzequielLech/chainguard-mcp@v1.3.0
+        with:
+          path: "."
+          fail-on-block: "true"
+```
 
 ---
 
@@ -37,7 +57,7 @@ Connect directly to the hosted Streamable-HTTP MCP server (`2025-03-26` + `2024-
 Or run the **Zero-Dependency Local Stdio Bridge + Offline Pre-Flight Firewall** via `pip` / `uvx`:
 
 ```bash
-pip install git+https://github.com/EzeLich/chainguard-mcp.git
+pip install git+https://github.com/EzequielLech/chainguard-mcp.git
 chainguard-mcp mcp
 # Or deterministic offline security firewall with zero network calls:
 chainguard-mcp mcp --offline
@@ -81,11 +101,12 @@ chainguard-mcp mcp --offline
 
 ---
 
-## Offline CLI Firewall
+## Offline CLI Firewall & Repository Scanner
 
-Audit transaction calldata or MCP tool payloads right in CI/CD or pre-commit hooks with **zero API keys**:
+Audit transaction calldata, MCP tool payloads, or an entire repository of `.sol` contracts and MCP configs right in CI/CD or pre-commit hooks with **zero API keys**:
 
 ```bash
+chainguard-mcp scan-dir . --fail-on-block --markdown
 chainguard-mcp scan-tx 0x095ea7b30000000000000000000000004ed4d0750453c027fa8398067d5af980bcc9b6edffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 chainguard-mcp scan-mcp "Analyze token safety"
 chainguard-mcp tools
@@ -105,7 +126,7 @@ chainguard-mcp tools
 ## Local Testing
 
 ```bash
-git clone https://github.com/EzeLich/chainguard-mcp.git
+git clone https://github.com/EzequielLech/chainguard-mcp.git
 cd chainguard-mcp
 pip install -e ".[dev]"
 pytest -v

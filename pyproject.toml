@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chainguard-mcp"
-version = "1.2.0"
-description = "15-tool Web3 Security, DeFi Yield, ERC-20 Allowance Revoker, Vault Recovery & Non-Custodial USDT/USDC MCP Server & Local Firewall Bridge for Claude Desktop, Cursor, Windsurf & OpenCode."
+version = "1.3.0"
+description = "15-tool Web3 Security, DeFi Yield, ERC-20 Allowance Revoker, Vault Recovery & Non-Custodial USDT/USDC MCP Server, GitHub Action CI Gate & Local Firewall Bridge."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -37,8 +37,8 @@ chainguard-mcp = "chainguard_mcp.cli:main"
 [project.urls]
 Homepage = "https://chainguard-studio-production.up.railway.app"
 MCP = "https://chainguard-studio-production.up.railway.app/mcp"
-Repository = "https://github.com/EzeLich/chainguard-mcp"
-Issues = "https://github.com/EzeLich/chainguard-mcp/issues"
+Repository = "https://github.com/EzequielLech/chainguard-mcp"
+Issues = "https://github.com/EzequielLech/chainguard-mcp/issues"
 
 [tool.setuptools.packages.find]
 include = ["chainguard_mcp*"]
