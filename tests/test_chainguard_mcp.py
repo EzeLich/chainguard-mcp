@@ -174,6 +174,7 @@ def test_scan_directory_and_github_action_cli(tmp_path, capsys):
     sarif_path = tmp_path / "chainguard.sarif"
     rc_sarif = cli_main(["scan-dir", str(tmp_path), "--sarif", str(sarif_path)])
     assert rc_sarif == 0
+    _ = capsys.readouterr()
     sarif = json.loads(sarif_path.read_text(encoding="utf-8"))
     assert sarif["version"] == "2.1.0"
     assert len(sarif["runs"][0]["results"]) >= 5
