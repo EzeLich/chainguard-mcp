@@ -1,5 +1,5 @@
 name: "ChainGuard Web3 & MCP Security Gate"
-description: "Zero-dependency CI security gate scanning Solidity contracts and MCP configs for critical vulnerabilities, Unicode smuggling, prompt injection, and leaked keys."
+description: "Zero-dependency CI security gate & SARIF 2.1.0 scanner for Solidity contracts, MCP configs & keys."
 branding:
   icon: "shield"
   color: "green"

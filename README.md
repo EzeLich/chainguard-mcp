@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: EzequielLech/chainguard-mcp@v1.4.0
+      - uses: EzequielLech/chainguard-mcp@v1.4.1
         with:
           path: "."
           sarif-file: "chainguard.sarif"

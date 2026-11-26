@@ -302,15 +302,15 @@ def format_scan_markdown(report: dict[str, Any]) -> str:
         lines.append("")
 
     lines.append(
-        f"Need full AI remediation patches, 8-chain allowance hygiene, or 24/7 watchdogs? "
-        f"[24h Micro Pass ($0.50)](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1) | "
-        f"[7-Day Starter Pass ($2.00)]({STARTER_PASS_URL}) | "
-        f"[30-Day Unlimited Pass ($9.00)]({INSTANT_PASS_URL})"
+        f"Unlock full remediation patches, embeddable On-Chain Verified SVG Badges, or 24/7 Frontend & Wallet Watchdogs: "
+        f"[Verified Badge & Audit ($19)](https://chainguard-studio-production.up.railway.app/#console) | "
+        f"[24/7 Watchdog ($9-$29/mo)](https://chainguard-studio-production.up.railway.app/#console) | "
+        f"[30-Day Unlimited MCP Pass ($9)]({INSTANT_PASS_URL})"
     )
     return "\n".join(lines)
 
 
-def format_scan_sarif(report: dict[str, Any], *, tool_version: str = "1.4.0") -> dict[str, Any]:
+def format_scan_sarif(report: dict[str, Any], *, tool_version: str = "1.4.1") -> dict[str, Any]:
     """Export a scan_directory report as OASIS SARIF 2.1.0 for GitHub Code Scanning."""
     findings = list(report.get("findings") or [])
     rules_by_id: dict[str, dict[str, Any]] = {}
