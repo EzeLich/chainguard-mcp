@@ -1,5 +1,6 @@
-# ChainGuard MCP v1.4 — 15-Tool Web3 Security, GitHub Code Scanning (SARIF 2.1.0) CI Gate, DeFi Yield, Allowance Revoker & Non-Custodial Payment MCP Server
+# ChainGuard MCP v1.4.1 — Web3 Security CI Gate (SARIF 2.1.0), 24/7 Hijack Watchdog, Verified Audit Badges & 15-Tool DeFi MCP Server
 
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-ChainGuard%20Web3%20%26%20MCP%20Security%20Gate-10b981.svg)](https://github.com/marketplace/actions/chainguard-web3-mcp-security-gate)
 [![CI](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml)
 [![Official MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.EzequielLech%2Fchainguard--mcp-2563eb.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=EzequielLech)
 [![ChainGuard MCP server](https://glama.ai/mcp/servers/EzequielLech/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/servers/EzequielLech/chainguard-mcp)
@@ -8,15 +9,17 @@
 [![MCP: 2025-06-18](https://img.shields.io/badge/MCP-Streamable%20HTTP%20%2B%20Stdio-38bdf8.svg)](https://chainguard-studio-production.up.railway.app/mcp)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://python.org)
 
-**Equip Claude Desktop, Cursor, Windsurf, OpenCode, Autonomous AI Agents, and GitHub Actions CI Pipelines with 15 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, ERC-20 Allowance Revokers, DeFiLlama Yield Scanners, Vault Recovery Calldata Builders, and Non-Custodial USDT/USDC Checkout Tools.**
+**Equip GitHub Actions CI Pipelines, Claude Desktop, Cursor, Windsurf, OpenCode, and Autonomous AI Agents with 15 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, 24/7 Frontend Drainer Watchdogs, ERC-20 Allowance Revokers, and Non-Custodial Checkout Tools.**
 
-- **Live Hosted MCP Endpoint (Zero Install):** `https://chainguard-studio-production.up.railway.app/mcp`
-- **Instant $0.50 24h Micro-Pass (50 Calls) · $2 7-Day Starter Pass (250 Calls) · $9 30-Day Unlimited Pass:**
-  - [$0.50 · 24h Micro-Unlock Pass ->](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=0.5&network=base&title=ChainGuard+24h+Micro+Unlock+Pass&issue_pass=1&billing_days=1)
-  - [$2.00 · 7-Day Starter MCP Pass ->](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=2&network=base&title=ChainGuard+7-Day+Starter+MCP+Pass&issue_pass=1&billing_days=7)
-  - [$9.00 · 30-Day Unlimited MCP Pass ->](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)
-- **Full Platform & Wallet Recovery:** [https://chainguard-studio-production.up.railway.app](https://chainguard-studio-production.up.railway.app)
-- **Powered by:** [EzequielLech/paygate-usdt](https://github.com/EzequielLech/paygate-usdt) (`0%` non-custodial USDT/USDC settlement)
+- **Live Security Console & Free Scan:** [https://chainguard-studio-production.up.railway.app](https://chainguard-studio-production.up.railway.app)
+- **Live Hosted MCP Endpoint (Zero Install, 5 Free Calls/Hr):** `https://chainguard-studio-production.up.railway.app/mcp`
+- **Production Upgrades (1-Click Multi-Chain Settlement — Zero Signup or KYC):**
+  - [On-Chain Verified SVG Security Badge + Investor Remediation Dossier ($19) ->](https://chainguard-studio-production.up.railway.app/#console)
+  - [24/7 DeFi Frontend Drainer & EIP-1967 Proxy Upgrade Watchdog ($29/mo) ->](https://chainguard-studio-production.up.railway.app/#console)
+  - [30-Day Unlimited Cloud Pro MCP & API Pass ($9/mo) ->](https://chainguard-studio-production.up.railway.app/paygate/pay?merchant=0x4Ed4D0750453C027FA8398067d5af980Bcc9B6eD&amount=9&network=base&title=ChainGuard+Unlimited+MCP+Pass&issue_pass=1&billing_days=30)
+  - [Complete Protocol Fix Kit + 5,000 Pro Calls ($49) ->](https://chainguard-studio-production.up.railway.app/#console)
+- **Zero-Cost Wallet Rent & Dust Recovery (+88% Net SOL Back):** [https://chainguard-studio-production.up.railway.app/recover](https://chainguard-studio-production.up.railway.app/recover)
+- **Sister Non-Custodial Payment Gateway (`EzequielLech/paygate-usdt`):** [https://github.com/marketplace/actions/paygate-x402-crypto-checkout-gate](https://github.com/marketplace/actions/paygate-x402-crypto-checkout-gate)
 
 ---
 
