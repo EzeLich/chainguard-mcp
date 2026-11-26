@@ -17,6 +17,10 @@ inputs:
     description: "Python version used to run chainguard-mcp"
     required: false
     default: "3.12"
+  sarif-file:
+    description: "Optional output path for OASIS SARIF 2.1.0 report (for github/codeql-action/upload-sarif)"
+    required: false
+    default: ""
 
 outputs:
   verdict:
@@ -28,6 +32,9 @@ outputs:
   findings-count:
     description: "Total security findings detected"
     value: ${{ steps.scan.outputs.findings_count }}
+  sarif-file:
+    description: "Path to generated SARIF 2.1.0 report if sarif-file input was provided"
+    value: ${{ steps.scan.outputs.sarif-file }}
 
 runs:
   using: "composite"
@@ -46,7 +53,11 @@ runs:
       shell: bash
       run: |
         set +e
-        JSON_OUT=$(chainguard-mcp scan-dir "${{ inputs.path }}")
+        SARIF_ARG=""
+        if [ -n "${{ inputs.sarif-file }}" ]; then
+          SARIF_ARG="--sarif ${{ inputs.sarif-file }}"
+        fi
+        JSON_OUT=$(chainguard-mcp scan-dir "${{ inputs.path }}" $SARIF_ARG)
         python - << 'PY' <<< "$JSON_OUT"
         import json, os, sys
         data = json.loads(sys.stdin.read())
@@ -56,6 +67,7 @@ runs:
                 fh.write(f"verdict={data.get('verdict', 'ALLOW')}\n")
                 fh.write(f"files_scanned={data.get('files_scanned', 0)}\n")
                 fh.write(f"findings_count={data.get('findings_count', 0)}\n")
+                fh.write(f"sarif-file={os.environ.get('INPUT_SARIF_FILE', '')}\n")
         PY
         if [ "${{ inputs.fail-on-block }}" = "true" ]; then
           chainguard-mcp scan-dir "${{ inputs.path }}" --markdown --github-summary --fail-on-block
@@ -64,3 +76,5 @@ runs:
           chainguard-mcp scan-dir "${{ inputs.path }}" --markdown --github-summary
           exit 0
         fi
+      env:
+        INPUT_SARIF_FILE: ${{ inputs.sarif-file }}

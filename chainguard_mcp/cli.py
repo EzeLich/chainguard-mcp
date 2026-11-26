@@ -13,6 +13,7 @@ from . import (
     INSTANT_PASS_URL,
     ChainGuardRemoteClient,
     format_scan_markdown,
+    format_scan_sarif,
     handle_mcp_message,
     inspect_mcp_text,
     inspect_tx_calldata,
@@ -63,6 +64,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_dir.add_argument("--fail-on-block", action="store_true")
     p_dir.add_argument("--markdown", action="store_true")
     p_dir.add_argument("--github-summary", action="store_true")
+    p_dir.add_argument("--sarif", default="", help="Write OASIS SARIF 2.1.0 report to file path for GitHub Code Scanning")
 
     p_tools = sub.add_parser("tools", help="List live remote MCP tools and the $9 1-Click Monthly Pass link")
     p_tools.add_argument("--url", default=DEFAULT_MCP_URL)
@@ -84,6 +86,10 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "scan-dir":
         report = scan_directory(args.path)
         md = format_scan_markdown(report)
+        if args.sarif:
+            sarif_doc = format_scan_sarif(report)
+            with open(args.sarif, "w", encoding="utf-8") as fh:
+                json.dump(sarif_doc, fh, indent=2)
         if args.github_summary:
             summary_path = os.environ.get("GITHUB_STEP_SUMMARY", "").strip()
             if summary_path:

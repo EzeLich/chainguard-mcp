@@ -171,6 +171,15 @@ def test_scan_directory_and_github_action_cli(tmp_path, capsys):
     assert rc_fail == 2
     assert "ChainGuard Security Gate Report" in capsys.readouterr().out
 
+    sarif_path = tmp_path / "chainguard.sarif"
+    rc_sarif = cli_main(["scan-dir", str(tmp_path), "--sarif", str(sarif_path)])
+    assert rc_sarif == 0
+    sarif = json.loads(sarif_path.read_text(encoding="utf-8"))
+    assert sarif["version"] == "2.1.0"
+    assert len(sarif["runs"][0]["results"]) >= 5
+    sol_res = [r for r in sarif["runs"][0]["results"] if r["ruleId"] == "SOL-TX-ORIGIN"][0]
+    assert sol_res["locations"][0]["physicalLocation"]["region"]["startLine"] == 4
+
     rc_clean = cli_main(["scan-dir", str(clean_dir), "--fail-on-block"])
     assert rc_clean == 0
     clean_json = json.loads(capsys.readouterr().out)

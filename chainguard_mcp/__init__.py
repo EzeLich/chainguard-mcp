@@ -108,6 +108,13 @@ def inspect_tx_calldata(calldata: str, to_address: str = "") -> dict[str, Any]:
     }
 
 
+def _find_line_number(src: str, pattern: str) -> int:
+    for idx, line in enumerate((src or "").splitlines(), start=1):
+        if re.search(pattern, line, re.IGNORECASE):
+            return idx
+    return 1
+
+
 def inspect_mcp_text(text: str) -> dict[str, Any]:
     """Deterministic offline scanner for zero-width Unicode poisoning, prompt injection, and leaked keys."""
     body = text or ""
@@ -118,19 +125,28 @@ def inspect_mcp_text(text: str) -> dict[str, Any]:
     zw_count = sum(body.count(ch) for ch in _ZW_CHARS)
     if zw_count > 0:
         risk_score += 55
-        alerts.append({"id": "MCP-UNI-ZW", "severity": "CRITICAL", "detail": f"Detected {zw_count} invisible zero-width/bidi characters."})
+        zw_line = 1
+        for idx, line in enumerate(body.splitlines(), start=1):
+            if any(ch in line for ch in _ZW_CHARS):
+                zw_line = idx
+                break
+        alerts.append({"id": "MCP-UNI-ZW", "severity": "CRITICAL", "line": zw_line, "detail": f"Detected {zw_count} invisible zero-width/bidi characters."})
 
-    if any(p in low for p in ("ignore previous instructions", "exfiltrate", "system prompt", "private_key", "seed phrase")):
-        risk_score += 65
-        alerts.append({"id": "MCP-PROMPT-INJECT", "severity": "CRITICAL", "detail": "Prompt injection or credential exfiltration phrase detected."})
+    for phrase in ("ignore previous instructions", "exfiltrate", "system prompt", "private_key", "seed phrase"):
+        if phrase in low:
+            risk_score += 65
+            alerts.append({"id": "MCP-PROMPT-INJECT", "severity": "CRITICAL", "line": _find_line_number(body, re.escape(phrase)), "detail": "Prompt injection or credential exfiltration phrase detected."})
+            break
 
-    if _SOL_KEYPAIR_RE.search(body):
+    m_sol = _SOL_KEYPAIR_RE.search(body)
+    if m_sol:
         risk_score += 80
-        alerts.append({"id": "DRAIN-SOL-BYTES", "severity": "CRITICAL", "detail": "Raw 64-byte Solana keypair array exposed."})
+        alerts.append({"id": "DRAIN-SOL-BYTES", "severity": "CRITICAL", "line": body[:m_sol.start()].count("\n") + 1, "detail": "Raw 64-byte Solana keypair array exposed."})
 
-    if _SECRET_RE.search(body):
+    m_sec = _SECRET_RE.search(body)
+    if m_sec:
         risk_score += 75
-        alerts.append({"id": "SECRET-TOKEN-LEAK", "severity": "CRITICAL", "detail": "API token / signing secret pattern detected."})
+        alerts.append({"id": "SECRET-TOKEN-LEAK", "severity": "CRITICAL", "line": body[:m_sec.start()].count("\n") + 1, "detail": "API token / signing secret pattern detected."})
 
     risk_score = min(100, risk_score)
     verdict = "BLOCK" if risk_score >= 50 else ("WARN" if risk_score >= 25 else "ALLOW")
@@ -151,23 +167,23 @@ def inspect_solidity_text(text: str) -> dict[str, Any]:
 
     if re.search(r"\btx\.origin\b", src):
         risk_score += 70
-        alerts.append({"id": "SOL-TX-ORIGIN", "severity": "CRITICAL", "detail": "tx.origin authentication bypass vector detected; use msg.sender."})
+        alerts.append({"id": "SOL-TX-ORIGIN", "severity": "CRITICAL", "line": _find_line_number(src, r"\btx\.origin\b"), "detail": "tx.origin authentication bypass vector detected; use msg.sender."})
 
     if re.search(r"\bselfdestruct\s*\(", src):
         risk_score += 80
-        alerts.append({"id": "SOL-SELFDESTRUCT", "severity": "CRITICAL", "detail": "selfdestruct() call detected (deprecated/high-risk contract destruction)."})
+        alerts.append({"id": "SOL-SELFDESTRUCT", "severity": "CRITICAL", "line": _find_line_number(src, r"\bselfdestruct\s*\("), "detail": "selfdestruct() call detected (deprecated/high-risk contract destruction)."})
 
     if re.search(r"\.delegatecall\s*\(", src):
         risk_score += 55
-        alerts.append({"id": "SOL-DELEGATECALL", "severity": "HIGH", "detail": "Low-level delegatecall() shares caller storage; verify trusted target and layout."})
+        alerts.append({"id": "SOL-DELEGATECALL", "severity": "HIGH", "line": _find_line_number(src, r"\.delegatecall\s*\("), "detail": "Low-level delegatecall() shares caller storage; verify trusted target and layout."})
 
     if re.search(r"\.call\s*\{[^}]*value\s*:", src) and "nonReentrant" not in src:
         risk_score += 65
-        alerts.append({"id": "SOL-REENTRANCY", "severity": "CRITICAL", "detail": "External ETH .call{value:} transfer without nonReentrant guard detected."})
+        alerts.append({"id": "SOL-REENTRANCY", "severity": "CRITICAL", "line": _find_line_number(src, r"\.call\s*\{"), "detail": "External ETH .call{value:} transfer without nonReentrant guard detected."})
 
     if re.search(r"\.call\s*[\(\{]", src) and not re.search(r"\(\s*bool\b", src) and "require(" not in src:
         risk_score += 40
-        alerts.append({"id": "SOL-UNCHECKED-CALL", "severity": "HIGH", "detail": "Low-level .call() return boolean does not appear checked."})
+        alerts.append({"id": "SOL-UNCHECKED-CALL", "severity": "HIGH", "line": _find_line_number(src, r"\.call\s*[\(\{]"), "detail": "Low-level .call() return boolean does not appear checked."})
 
     risk_score = min(100, risk_score)
     verdict = "BLOCK" if risk_score >= 50 else ("WARN" if risk_score >= 25 else "ALLOW")
@@ -232,6 +248,7 @@ def scan_directory(root_path: str) -> dict[str, Any]:
                     findings.append(
                         {
                             "file": rel_path,
+                            "line": int(al.get("line") or 1),
                             "id": al.get("id"),
                             "severity": sev,
                             "detail": al.get("detail"),
@@ -291,6 +308,69 @@ def format_scan_markdown(report: dict[str, Any]) -> str:
         f"[30-Day Unlimited Pass ($9.00)]({INSTANT_PASS_URL})"
     )
     return "\n".join(lines)
+
+
+def format_scan_sarif(report: dict[str, Any], *, tool_version: str = "1.4.0") -> dict[str, Any]:
+    """Export a scan_directory report as OASIS SARIF 2.1.0 for GitHub Code Scanning."""
+    findings = list(report.get("findings") or [])
+    rules_by_id: dict[str, dict[str, Any]] = {}
+    results: list[dict[str, Any]] = []
+    sev_to_level = {"CRITICAL": "error", "HIGH": "error", "MEDIUM": "warning", "INFO": "note"}
+    sev_to_score = {"CRITICAL": "9.0", "HIGH": "7.5", "MEDIUM": "5.0", "INFO": "2.0"}
+
+    for item in findings:
+        rule_id = str(item.get("id") or "CHAINGUARD-FINDING")
+        sev = str(item.get("severity") or "INFO").upper()
+        detail = str(item.get("detail") or "")
+        file_uri = str(item.get("file") or "unknown").lstrip("./")
+        start_line = max(1, int(item.get("line") or 1))
+        level = sev_to_level.get(sev, "warning")
+
+        if rule_id not in rules_by_id:
+            rules_by_id[rule_id] = {
+                "id": rule_id,
+                "name": rule_id.replace("-", "_"),
+                "shortDescription": {"text": detail or rule_id},
+                "defaultConfiguration": {"level": level},
+                "properties": {
+                    "security-severity": sev_to_score.get(sev, "5.0"),
+                    "tags": ["security", "web3", "solidity", "mcp"],
+                },
+            }
+
+        results.append(
+            {
+                "ruleId": rule_id,
+                "level": level,
+                "message": {"text": detail or rule_id},
+                "locations": [
+                    {
+                        "physicalLocation": {
+                            "artifactLocation": {"uri": file_uri},
+                            "region": {"startLine": start_line},
+                        }
+                    }
+                ],
+            }
+        )
+
+    return {
+        "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+        "version": "2.1.0",
+        "runs": [
+            {
+                "tool": {
+                    "driver": {
+                        "name": "ChainGuard MCP Security Gate",
+                        "version": tool_version,
+                        "informationUri": "https://github.com/EzequielLech/chainguard-mcp",
+                        "rules": list(rules_by_id.values()),
+                    }
+                },
+                "results": results,
+            }
+        ],
+    }
 
 
 class ChainGuardRemoteClient:

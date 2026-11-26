@@ -1,4 +1,4 @@
-# ChainGuard MCP v1.3 — 15-Tool Web3 Security, GitHub Action CI Gate, DeFi Yield, Allowance Revoker & USDT Payment MCP Server
+# ChainGuard MCP v1.4 — 15-Tool Web3 Security, GitHub Code Scanning (SARIF 2.1.0) CI Gate, DeFi Yield, Allowance Revoker & Non-Custodial Payment MCP Server
 
 [![CI](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml)
 [![Official MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.EzequielLech%2Fchainguard--mcp-2563eb.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=EzequielLech)
@@ -20,22 +20,29 @@
 
 ---
 
-## GitHub Action CI Security Gate (10-Line Workflow)
+## GitHub Action CI Security Gate & SARIF 2.1.0 Code Scanning
 
-Block `tx.origin` auth bypasses, `selfdestruct`, unchecked `delegatecall`, reentrancy, invisible zero-width Unicode tool poisoning, prompt injections, and leaked private keys on every pull request:
+Block `tx.origin` auth bypasses, `selfdestruct`, unchecked `delegatecall`, reentrancy, invisible zero-width Unicode tool poisoning, prompt injections, and leaked private keys on every pull request, with native **OASIS SARIF 2.1.0** export for the GitHub Security tab:
 
 ```yaml
 name: ChainGuard Security Gate
 on: [push, pull_request]
+permissions:
+  security-events: write
 jobs:
   security:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: EzequielLech/chainguard-mcp@v1.3.1
+      - uses: EzequielLech/chainguard-mcp@v1.4.0
         with:
           path: "."
+          sarif-file: "chainguard.sarif"
           fail-on-block: "true"
+      - if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: chainguard.sarif
 ```
 
 ---
