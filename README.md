@@ -2,8 +2,8 @@
 
 [![CI](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml)
 [![Official MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.EzequielLech%2Fchainguard--mcp-2563eb.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=EzequielLech)
-[![ChainGuard MCP server](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/servers/EzeLich/chainguard-mcp)
-[![ChainGuard MCP connector](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.EzeLich/chainguard-mcp)
+[![ChainGuard MCP server](https://glama.ai/mcp/servers/EzequielLech/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/servers/EzequielLech/chainguard-mcp)
+[![ChainGuard MCP connector](https://glama.ai/mcp/connectors/io.github.EzequielLech/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.EzequielLech/chainguard-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![MCP: 2025-06-18](https://img.shields.io/badge/MCP-Streamable%20HTTP%20%2B%20Stdio-38bdf8.svg)](https://chainguard-studio-production.up.railway.app/mcp)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://python.org)
