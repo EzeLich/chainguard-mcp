@@ -11,7 +11,8 @@
 
 **Equip GitHub Actions CI Pipelines, Claude Desktop, Cursor, Windsurf, OpenCode, and Autonomous AI Agents with 15 Web3 Security Firewalls, EIP-7702 Hijack Detectors, Solana Token-2022 Auditors, 24/7 Frontend Drainer Watchdogs, ERC-20 Allowance Revokers, and Non-Custodial Checkout Tools.**
 
-- **Live Security Console & Free Scan:** [https://chainguard-studio-production.up.railway.app](https://chainguard-studio-production.up.railway.app)
+- **Live Security Console & 1-Click GitHub Repo Scanner:** [https://chainguard-studio-production.up.railway.app](https://chainguard-studio-production.up.railway.app)
+- **Official 1-Click GitHub Starter Template (`Use this template`):** [EzequielLech/solidity-sarif-security-starter](https://github.com/EzequielLech/solidity-sarif-security-starter)
 - **Live Hosted MCP Endpoint (Zero Install, 5 Free Calls/Hr):** `https://chainguard-studio-production.up.railway.app/mcp`
 - **Production Upgrades (1-Click Multi-Chain Settlement — Zero Signup or KYC):**
   - [On-Chain Verified SVG Security Badge + Investor Remediation Dossier ($19) ->](https://chainguard-studio-production.up.railway.app/#console)
