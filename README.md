@@ -1,6 +1,7 @@
 # ChainGuard MCP v1.4.1 — Web3 Security CI Gate (SARIF 2.1.0), 24/7 Hijack Watchdog, Verified Audit Badges & 15-Tool DeFi MCP Server
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-ChainGuard%20Web3%20%26%20MCP%20Security%20Gate-10b981.svg)](https://github.com/marketplace/actions/chainguard-web3-mcp-security-gate)
+[![ChainGuard Security](https://chainguard-studio-production.up.railway.app/api/v1/repo-badge/EzequielLech/chainguard-mcp.svg)](https://chainguard-studio-production.up.railway.app/audit-github/EzequielLech/chainguard-mcp)
 [![CI](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/EzequielLech/chainguard-mcp/actions/workflows/ci.yml)
 [![Official MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.EzequielLech%2Fchainguard--mcp-2563eb.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=EzequielLech)
 [![ChainGuard MCP server](https://glama.ai/mcp/servers/EzequielLech/chainguard-mcp/badges/score.svg)](https://glama.ai/mcp/servers/EzequielLech/chainguard-mcp)
