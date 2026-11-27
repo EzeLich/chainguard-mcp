@@ -1,4 +1,4 @@
-# ChainGuard MCP v1.4.1 — Web3 Security CI Gate (SARIF 2.1.0), 24/7 Hijack Watchdog, Verified Audit Badges & 15-Tool DeFi MCP Server
+# ChainGuard MCP v1.5.0 — Web3 Security CI Gate (SARIF 2.1.0), 24/7 Hijack Watchdog, Verified Audit Badges & 15-Tool DeFi MCP Server
 
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-ChainGuard%20Web3%20%26%20MCP%20Security%20Gate-10b981.svg)](https://github.com/marketplace/actions/chainguard-web3-mcp-security-gate)
 [![ChainGuard Security](https://chainguard-studio-production.up.railway.app/api/v1/repo-badge/EzequielLech/chainguard-mcp.svg)](https://chainguard-studio-production.up.railway.app/audit-github/EzequielLech/chainguard-mcp)
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: EzequielLech/chainguard-mcp@v1.4.1
+      - uses: EzequielLech/chainguard-mcp@v1.5.0
         with:
           path: "."
           sarif-file: "chainguard.sarif"
